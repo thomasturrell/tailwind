@@ -1,0 +1,11 @@
+image: maven:3.5.3
+
+pipelines:
+  default:
+    - step:
+        name: Test
+        caches:
+          - maven
+        script:
+          - mvn clean package
+          - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=berrycloud -Dsonar.login=$SONAR_TOKEN
