@@ -31,3 +31,15 @@ pipelines:
           artifacts:
             - '*/target/*.war'
             - '*/target/maven-archiver/pom.properties'
+  branches:            
+    master:
+      - step:
+          name: Test, package and verify
+          caches:
+            - maven
+          script:
+            - mvn clean install
+            - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=berrycloud -Dsonar.login=$SONAR_TOKEN
+          artifacts:
+            - '*/target/*.war'
+            - '*/target/maven-archiver/pom.properties'
