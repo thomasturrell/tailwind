@@ -1,0 +1,320 @@
+= Plans
+
+== List plans
+
+List all plans present in the application database.
+
+`GET /plans`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|page
+|number
+|The page number to return
+
+|size
+|number
+|The number of plans to return
+
+|sort
+|string
+|What to sort plans by. Can be either `name` or `organization`. Default: `name`
+|===
+
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "_embedded":{
+    "plans":[
+      {
+        "name":"Gold",
+        "organization":"Healthy",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/plans/1"
+          },
+          "plan":{
+            "href":"http://localhost:8080/plans/1"
+          },
+          "members":{
+            "href":"http://localhost:8080/plans/1/members"
+          }
+        }
+      },
+      {
+        "name":"Silver",
+        "organization":"Healthy",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/plans/2"
+          },
+          "plan":{
+            "href":"http://localhost:8080/plans/2"
+          },
+          "members":{
+            "href":"http://localhost:8080/plans/2/members"
+          }
+        }
+      }
+    ]
+  },
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/plans{?page,size,sort}",
+      "templated":true
+    },
+    "profile":{
+      "href":"http://localhost:8080/profile/plans"
+    }
+  },
+  "page":{
+    "size":20,
+    "totalElements":2,
+    "totalPages":1,
+    "number":0
+  }
+}
+----
+
+== Get a single plan
+
+Return a plan with a given ID.
+
+NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
+
+`GET /plans/{id}`
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "name":"Gold",
+  "organization":"Healthy",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/plans/1"
+    },
+    "plan":{
+      "href":"http://localhost:8080/plans/1"
+    },
+    "members":{
+      "href":"http://localhost:8080/plans/1/members"
+    }
+  }
+}
+----
+
+== Create a plan
+
+A client can create a new plan.
+
+`POST /plans`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|name
+|string
+|*Required.* The name of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+
+|organization
+|string
+|*Required.* The organization of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|===
+
+=== Example
+[source, json]
+----
+{
+  "name":"Gold",
+  "organization":"Healthy"
+}
+----
+
+=== Response
+`Status: 201 Created` +
+`Location: http://localhost:8080/plans/1`
+[source, json]
+----
+{
+  "name":"Gold",
+  "organization":"Healthy",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/plans/1"
+    },
+    "plan":{
+      "href":"http://localhost:8080/plans/1"
+    },
+    "members":{
+      "href":"http://localhost:8080/plans/1/members"
+    }
+  }
+}
+----
+
+== Edit a plan
+
+A client can edit an existing plan identified by the ID.
+
+NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
+
+`PATCH /plan/{id}`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|name
+|string
+|The name of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+
+|organization
+|string
+|The organization of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|===
+
+=== Example
+[source, json]
+----
+{
+  "name":"New",
+  "organization":"Value"
+}
+----
+
+=== Response
+`Status: 200 OK` +
+`Location: http://localhost:8080/organizations/1`
+[source, json]
+----
+{
+  "name":"New",
+  "organization":"Value",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/plans/1"
+    },
+    "plan":{
+      "href":"http://localhost:8080/plans/1"
+    },
+    "members":{
+      "href":"http://localhost:8080/plans/1/members"
+    }
+  }
+}
+----
+
+== Delete a plan
+
+A client can delete an existing plan identified by the ID.
+
+NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
+
+`DELETE /plan/{id}`
+
+=== Response
+`Status: 204 No Content`
+
+== Get the members of a plan
+
+Return the members of an plan with a given ID.
+
+NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
+
+`GET /plans/{id}/members`
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "_embedded":{
+    "members":[
+      {
+        "firstName":"Jane",
+        "lastName":"Dow",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/members/2"
+          },
+          "member":{
+            "href":"http://localhost:8080/members/2"
+          },
+          "plans":{
+            "href":"http://localhost:8080/members/2/plans"
+          }
+        }
+      },
+      {
+        "firstName":"Fred",
+        "lastName":"Bloggs",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/members/1"
+          },
+          "member":{
+            "href":"http://localhost:8080/members/1"
+          },
+          "plans":{
+            "href":"http://localhost:8080/members/1/plans"
+          }
+        }
+      }
+    ]
+  },
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/plans/1/members"
+    }
+  }
+}
+----
+
+== Add members to a plan
+
+A client can add members to an existing plan identified by the plan self link.  Members are identified by the member self link.
+
+NOTE: The API returns a `200 Ok` even if a member with given ID does not exist in the database. The members self link can be relative. Multiple members are separated by a newline.
+
+`content-type: text/uri-list` +
+`PATCH /plan/{id}/members`
+
+=== Example
+
+----
+members/1
+members/2
+----
+
+== Replace the members of a plan
+
+A client can replace members of an existing plan identified by the plan self link.  Members are identified by the member self link.
+
+NOTE: The API returns a `200 Ok` even if a member with given ID does not exist in the database. The members self link can be relative. Multiple members are separated by a newline. It is possible to replace the members with zero members.
+
+`content-type: text/uri-list` +
+`PUT /plan/{id}/members`
+
+=== Example
+
+----
+members/1
+members/2
+----

@@ -118,6 +118,18 @@ public class MemberControllerIT {
   }
 
   @Test
+  public void testGivenExistingMemberWithPlanWhenGettingMemberPlansThenStatusCodeIsOk() {
+
+    // Given Existing Member With Plan
+
+    // When Getting Member Plans
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/members/1/plans", String.class);
+
+    // Then Status Code Is Ok
+    assertThat(response.getStatusCode(), is(HttpStatus.OK));
+  }
+
+  @Test
   public void testGivenMemberExistsWhenDeletingMemberThenStatusCodeIsNoContent() {
 
     // Given Member Exists

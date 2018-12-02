@@ -23,25 +23,37 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Member {
+public class Plan {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /**
+   * <p>
+   * The name of this plan.
+   * </p>
+   */
   @NotBlank
   @Size(max = 255)
-  private String firstName;
-
-  @NotBlank
-  @Size(max = 255)
-  private String lastName;
+  private String name;
 
   /**
-   * The plans associated with this member.
+   * <p>
+   * The organization that provides this plan.
+   * </p>
+   */
+  @NotBlank
+  @Size(max = 255)
+  private String organization;
+
+  /**
+   * <p>
+   * The members associated with this plan.
+   * </p>
    */
   @ManyToMany
-  @JoinTable(name = "member_plan", inverseJoinColumns = { @JoinColumn(name = "plan_id") })
-  private Set<Plan> plans = new HashSet<>();
+  @JoinTable(name = "member_plan", inverseJoinColumns = { @JoinColumn(name = "member_id") })
+  private Set<Member> members = new HashSet<>();
 
 }

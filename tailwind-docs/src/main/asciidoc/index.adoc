@@ -2,3 +2,4 @@
 Thomas Turrell-Croft, Leonid Zhaldybin
 
 include::member.adoc[]
+include::plan.adoc[]

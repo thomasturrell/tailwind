@@ -32,48 +32,54 @@ List all members present in the application database.
 [source, json]
 ----
 {
-  "_embedded": {
-    "members": [
+  "_embedded":{
+    "members":[
       {
-        "firstName": "Lisa",
-        "lastName": "Simpson",
-        "_links": {
-          "self": {
-            "href": "http://localhost:8080/members/1"
+        "firstName":"Lisa",
+        "lastName":"Simpson",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/members/1"
           },
-          "member": {
-            "href": "http://localhost:8080/members/1"
+          "member":{
+            "href":"http://localhost:8080/members/1"
+          },
+          "plans":{
+            "href":"http://localhost:8080/members/1/plans"
           }
         }
       },
       {
-        "firstName": "Test",
-        "lastName": "Member",
-        "_links": {
-          "self": {
-            "href": "http://localhost:8080/members/2"
+        "firstName":"Test",
+        "lastName":"Member",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/members/2"
           },
-          "member": {
-            "href": "http://localhost:8080/members/2"
+          "member":{
+            "href":"http://localhost:8080/members/2"
+          },
+          "plans":{
+            "href":"http://localhost:8080/members/2/plans"
           }
         }
       }
     ]
   },
-  "_links": {
-    "self": {
-      "href": "http://localhost:8080/members{?page,size,sort}",
-      "templated": true
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/members{?page,size,sort}",
+      "templated":true
     },
-    "profile": {
-      "href": "http://localhost:8080/profile/members"
+    "profile":{
+      "href":"http://localhost:8080/profile/members"
     }
   },
-  "page": {
-    "size": 20,
-    "totalElements": 2,
-    "totalPages": 1,
-    "number": 0
+  "page":{
+    "size":20,
+    "totalElements":2,
+    "totalPages":1,
+    "number":0
   }
 }
 ----
@@ -93,14 +99,17 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 [source, json]
 ----
 {
-  "firstName": "Lisa",
-  "lastName": "Simpson",
-  "_links": {
-    "self": {
-      "href": "http://localhost:8080/members/1"
+  "firstName":"Lisa",
+  "lastName":"Simpson",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/members/1"
     },
-    "member": {
-      "href": "http://localhost:8080/members/1"
+    "member":{
+      "href":"http://localhost:8080/members/1"
+    },
+    "plans":{
+      "href":"http://localhost:8080/members/1/plans"
     }
   }
 }
@@ -130,8 +139,8 @@ A client can create a new member.
 [source, json]
 ----
 {
-  "firstName": "Test",
-  "lastName": "Member"
+  "firstName":"Test",
+  "lastName":"Member"
 }
 ----
 
@@ -141,14 +150,17 @@ A client can create a new member.
 [source, json]
 ----
 {
-  "firstName": "Test",
-  "lastName": "Member",
-  "_links": {
-    "self": {
-      "href": "http://localhost:8080/members/2"
+  "firstName":"Test",
+  "lastName":"Member",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/members/2"
     },
-    "member": {
-      "href": "http://localhost:8080/members/2"
+    "member":{
+      "href":"http://localhost:8080/members/2"
+    },
+    "plans":{
+      "href":"http://localhost:8080/members/2/plans"
     }
   }
 }
@@ -180,8 +192,8 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 [source, json]
 ----
 {
-  "firstName": "New",
-  "lastName": "Value"
+  "firstName":"New",
+  "lastName":"Value"
 }
 ----
 
@@ -191,14 +203,17 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 [source, json]
 ----
 {
-  "firstName": "New",
-  "lastName": "Value",
-  "_links": {
-    "self": {
-      "href": "http://localhost:8080/members/2"
+  "firstName":"New",
+  "lastName":"Value",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/members/2"
     },
-    "member": {
-      "href": "http://localhost:8080/members/2"
+    "member":{
+      "href":"http://localhost:8080/members/2"
+    },
+    "plans":{
+      "href":"http://localhost:8080/members/2/plans"
     }
   }
 }
@@ -214,3 +229,92 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 
 === Response
 `Status: 204 No Content`
+
+== Get the plans of a member
+
+Return the plans of a member with a given ID.
+
+NOTE: The API returns a `404 Not Found` if a member with given ID does not exist in the database.
+
+`GET /members/{id}/plans`
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "_embedded":{
+    "plans":[
+      {
+        "name":"Gold",
+        "organization":"Happy",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/plans/1"
+          },
+          "plan":{
+            "href":"http://localhost:8080/plans/1"
+          },
+          "members":{
+            "href":"http://localhost:8080/plans/1/members"
+          }
+        }
+      },
+      {
+        "name":"Gold",
+        "organization":"Health",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/plans/2"
+          },
+          "plan":{
+            "href":"http://localhost:8080/plans/2"
+          },
+          "members":{
+            "href":"http://localhost:8080/plans/2/members"
+          }
+        }
+      }
+    ]
+  },
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/members/1/plans"
+    }
+  }
+}
+----
+
+== Add plans to a member
+
+A client can add plans to an existing member identified by the member self link.  Plans are identified by the plan self link.
+
+NOTE: The API returns a `200 Ok` even if a plan with given ID does not exist in the database. The plans self link can be relative. Multiple plans are separated by a newline.
+
+`content-type: text/uri-list` +
+`PATCH /members/{id}/plans`
+
+=== Example
+
+----
+plans/1
+plans/2
+----
+
+== Replace the plans of a member
+
+A client can replace plans of an existing member identified by the member self link.  Plans are identified by the plans self link.
+
+NOTE: The API returns a `200 Ok` even if a plan with given ID does not exist in the database. The plans self link can be relative. Multiple plans are separated by a newline. It is possible to replace the plans with zero plans.
+
+`content-type: text/uri-list` +
+`PUT /members/{id}/plans`
+
+=== Example
+
+----
+plans/1
+plans/2
+----
