@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+
+  <property name="charset" value="UTF-8" />
+  <property name="fileExtensions" value="java, properties, xml" />
+
+  <!-- Checks that there are no tab characters ('\t') in the source code -->
+  <module name="FileTabCharacter">
+    <property name="eachLine" value="true" />
+  </module>
+
+  <!-- Checks whether files end with a line separator -->
+  <module name="NewlineAtEndOfFile">
+    <property name="lineSeparator" value="lf" />
+  </module>
+
+  <module name="TreeWalker">
+
+    <!--- Size violations -->
+
+    <!-- Checks for long lines -->
+    <module name="LineLength">
+      <property name="max" value="120" /> <!-- Exception to Google rules -->
+      <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://|public void test|^ *test" />
+    </module>
+
+    <!--- Imports -->
+
+    <!-- Checks that there are no import statements that use the * notation. Importing all classes from a package or
+     static members from a class leads to tight coupling between packages or classes and might lead to problems when
+     a new version of a library introduces name clashes. -->
+    <module name="AvoidStarImport"/>
+
+    <!-- Checks that the groups of import declarations appear in the order specified -->
+    <module name="CustomImportOrder">
+      <property name="sortImportsInGroupAlphabetically" value="true"/>
+      <property name="separateLineBetweenGroups" value="true"/>
+      <property name="customImportOrderRules" value="STATIC###THIRD_PARTY_PACKAGE"/>
+    </module>
+
+    <!-- Checks for unused import statements -->
+    <module name="UnusedImports"/>
+
+    <!--- Whitespace-related rules -->
+
+    <!-- Checks that import and package statements are not line-wrapped -->
+    <module name="NoLineWrap"/>
+
+    <!-- Checks for empty blocks -->
+    <module name="EmptyBlock">
+      <property name="option" value="TEXT"/>
+      <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
+    </module>
+
+    <!-- Checks that a token is surrounded by whitespace -->
+    <module name="WhitespaceAround">
+      <property name="allowEmptyConstructors" value="true"/>
+      <property name="allowEmptyMethods" value="true"/>
+      <property name="allowEmptyTypes" value="true"/>
+      <property name="allowEmptyLoops" value="true"/>
+      <message key="ws.notFollowed"
+        value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
+      <message key="ws.notPreceded"
+        value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
+    </module>
+
+    <!-- Checks line wrapping with separators -->
+    <module name="SeparatorWrap">
+      <property name="id" value="SeparatorWrapDot"/>
+      <property name="tokens" value="DOT"/>
+      <property name="option" value="nl"/>
+    </module>
+    <module name="SeparatorWrap">
+      <property name="id" value="SeparatorWrapComma"/>
+      <property name="tokens" value="COMMA"/>
+      <property name="option" value="EOL"/>
+    </module>
+    <module name="SeparatorWrap">
+      <property name="id" value="SeparatorWrapEllipsis"/>
+      <property name="tokens" value="ELLIPSIS"/>
+      <property name="option" value="EOL"/>
+    </module>
+    <module name="SeparatorWrap">
+      <property name="id" value="SeparatorWrapArrayDeclarator"/>
+      <property name="tokens" value="ARRAY_DECLARATOR"/>
+      <property name="option" value="EOL"/>
+    </module>
+    <module name="SeparatorWrap">
+      <property name="id" value="SeparatorWrapMethodRef"/>
+      <property name="tokens" value="METHOD_REF"/>
+      <property name="option" value="nl"/>
+    </module>
+
+    <!-- Checks that the whitespace around the Generic tokens ("<" and ">") correspond to the typical convention -->
+    <module name="GenericWhitespace">
+      <message key="ws.followed"
+        value="GenericWhitespace ''{0}'' is followed by whitespace."/>
+      <message key="ws.preceded"
+        value="GenericWhitespace ''{0}'' is preceded with whitespace."/>
+      <message key="ws.illegalFollow"
+        value="GenericWhitespace ''{0}'' should followed by whitespace."/>
+      <message key="ws.notPreceded"
+        value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
+    </module>
+
+    <!-- Checks that there is no spaces or line break between the identifier of a method definition, constructor
+     definition, method call, or constructor invocation; and the left parenthesis of the parameter list -->
+    <module name="MethodParamPad"/>
+
+    <!-- Checks that there is no spaces after a left parenthesis and before a right parenthesis -->
+    <module name="ParenPad"/>
+
+    <!-- Checks that when a line is wrapped on an operator, then the operator is on the new line. Example:
+      someVariable = aBigVariableNameToMakeThings + "this may work"
+          + lookVeryInteresting; // this is OK
+      someOtherVariable = aBigVariableNameToMakeThings + "this may work" + // this is NOT OK
+          lookVeryInteresting;
+    -->
+    <module name="OperatorWrap">
+      <property name="option" value="NL"/>
+      <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR, METHOD_REF "/>
+    </module>
+
+    <!--- Block checks -->
+
+    <!-- Checks for braces around code blocks -->
+    <module name="NeedBraces"/>
+
+    <!-- Checks for the placement of left curly braces ('{') for code blocks.
+     By default is configured to check that the brace is on the end of the line.  -->
+    <module name="LeftCurly"/>
+
+    <!-- Checks the placement of right curly braces ('}') -->
+    <module name="RightCurly">
+      <property name="id" value="RightCurlySame"/>
+      <property name="tokens" value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_DO"/>
+    </module>
+    <module name="RightCurly">
+      <property name="id" value="RightCurlyAlone"/>
+      <property name="option" value="alone"/>
+      <property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT, INSTANCE_INIT"/>
+    </module>
+
+    <!-- Reports empty catch blocks, unless the exception variable name is "expected" -->
+    <module name="EmptyCatchBlock">
+      <property name="exceptionVariableName" value="expected"/>
+    </module>
+
+    <!--- Modifiers rules -->
+
+    <!-- Checks that the order of modifiers conforms to the suggestions in the Java Language specification.
+     The correct order is:
+      1. public
+      2. protected
+      3. private
+      4. abstract
+      5. default
+      6. static
+      7. final
+      8. transient
+      9. volatile
+      10. synchronized
+      11. native
+      12. strictfp
+    -->
+    <module name="ModifierOrder"/>
+
+    <!--- Annotations-related rules -->
+
+    <!-- Checks location of annotations on language elements. Annotations should be located immediately after
+     documentation block and before target element, on separate line from target element. -->
+    <module name="AnnotationLocation">
+      <property name="id" value="AnnotationLocationMostCases"/>
+      <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF"/>
+    </module>
+
+    <!-- Naming rules -->
+    <module name="PackageName">
+      <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+      <message key="name.invalidPattern"
+        value="Package name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="TypeName">
+      <message key="name.invalidPattern"
+        value="Type name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="MemberName">
+      <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
+      <message key="name.invalidPattern"
+        value="Member name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="ParameterName">
+      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <message key="name.invalidPattern"
+        value="Parameter name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="CatchParameterName">
+      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <message key="name.invalidPattern"
+        value="Catch parameter name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="LocalVariableName">
+      <property name="tokens" value="VARIABLE_DEF"/>
+      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <message key="name.invalidPattern"
+        value="Local variable name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="LocalFinalVariableName">
+      <property name="tokens" value="VARIABLE_DEF"/>
+      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
+      <message key="name.invalidPattern"
+        value="Local variable name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="ClassTypeParameterName">
+      <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+      <message key="name.invalidPattern"
+        value="Class type name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="MethodTypeParameterName">
+      <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+      <message key="name.invalidPattern"
+        value="Method type name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="InterfaceTypeParameterName">
+      <property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
+      <message key="name.invalidPattern"
+        value="Interface type name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+    <module name="MethodName">
+      <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
+      <message key="name.invalidPattern"
+        value="Method name ''{0}'' must match pattern ''{1}''."/>
+    </module>
+
+    <!--- Miscellaneous rules -->
+
+    <!-- Checks correct indentation of Java code. Indentation is set to 2 spaces, apart from indentation for
+     throws clause and cases where line-wrapping is present, indentation is set to 4 spaces for those. -->
+    <module name="Indentation">
+      <property name="basicOffset" value="2" />
+      <property name="braceAdjustment" value="0" />
+      <property name="caseIndent" value="2" />
+      <property name="throwsIndent" value="4" />
+      <property name="arrayInitIndent" value="2" />
+      <property name="lineWrappingIndentation" value="4" />
+    </module>
+
+    <!-- Checks that comments are indented at the same level as the surrounding code -->
+    <module name="CommentsIndentation" />
+  </module>
+
+</module>
