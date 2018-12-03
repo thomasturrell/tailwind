@@ -3,9 +3,31 @@ image: maven:3.5.3
 pipelines:
   default:
     - step:
-        name: Test
+        name: Test and package
         caches:
           - maven
         script:
           - mvn clean package
           - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=berrycloud -Dsonar.login=$SONAR_TOKEN
+  custom:
+    prepare-release:
+      - step:
+          name: Prepare release
+          caches:
+            - maven
+          script:
+            - git config --global user.email "leonid@berrycloud.cz"
+            - git config --global user.name "Leonid Zhaldybin"
+            - mvn -batch-mode release:prepare -Dusername=$USERNAME -Dpassword=$PASSWORD
+  tags:
+    flyway-demo-*:
+      - step:
+          name: Test, package and install
+          caches:
+            - maven
+          script:
+            - mvn clean install
+            - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=berrycloud -Dsonar.login=$SONAR_TOKEN
+          artifacts:
+            - '*/target/*.war'
+            - '*/target/maven-archiver/pom.properties'

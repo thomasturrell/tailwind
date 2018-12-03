@@ -6,11 +6,11 @@
 
   <groupId>com.berrycloud</groupId>
   <artifactId>flyway-demo</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>flyway-demo</name>
-  <description>Demo project for Spring Boot</description>
+  <description>Demo of flyway and supporting technologies</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -24,7 +24,15 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+    <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
   </properties>
+
+  <scm>
+    <url>https://bitbucket.org/berrycloud/tailwind</url>
+    <connection>scm:git:https://bitbucket.org/berrycloud/tailwind</connection>
+    <developerConnection>scm:git:https://bitbucket.org/berrycloud/tailwind</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <dependencies>
     <dependency>
@@ -85,6 +93,11 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${maven-release-plugin.version}</version>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
