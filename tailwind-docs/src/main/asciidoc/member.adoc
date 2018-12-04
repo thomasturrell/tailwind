@@ -21,7 +21,7 @@ List all members present in the application database.
 
 |sort
 |string
-|What to sort members by. Can be either `firstName` or `lastName`. Default: `firstName`
+|What to sort members by. Can be either `firstName`, `lastName`, `dateOfBirth` or `retirement`. Default: `firstName`
 |===
 
 
@@ -37,6 +37,8 @@ List all members present in the application database.
       {
         "firstName":"Lisa",
         "lastName":"Simpson",
+        "dateOfBirth":"1958-01-01",
+        "retirement":"2018-01-01",
         "_links":{
           "self":{
             "href":"http://localhost:8080/members/1"
@@ -52,6 +54,8 @@ List all members present in the application database.
       {
         "firstName":"Test",
         "lastName":"Member",
+        "dateOfBirth":"1948-01-01",
+        "retirement":"1985-01-12",
         "_links":{
           "self":{
             "href":"http://localhost:8080/members/2"
@@ -64,7 +68,7 @@ List all members present in the application database.
           }
         }
       }
-    } ]
+    ]
   },
   "_links":{
     "self":{
@@ -101,6 +105,8 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 {
   "firstName":"Lisa",
   "lastName":"Simpson",
+  "dateOfBirth":"1958-01-01",
+  "retirement":"2018-01-01",
   "_links":{
     "self":{
       "href":"http://localhost:8080/members/1"
@@ -140,7 +146,9 @@ A client can create a new member.
 ----
 {
   "firstName":"Test",
-  "lastName":"Member"
+  "lastName":"Member",
+  "dateOfBirth":"1958-01-01",
+  "retirement":"2018-01-01"
 }
 ----
 
@@ -152,6 +160,8 @@ A client can create a new member.
 {
   "firstName":"Test",
   "lastName":"Member",
+  "dateOfBirth":"1958-01-01",
+  "retirement":"2018-01-01",
   "_links":{
     "self":{
       "href":"http://localhost:8080/members/2"
@@ -194,6 +204,8 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 {
   "firstName":"New",
   "lastName":"Value"
+  "dateOfBirth":"1970-01-01",
+  "retirement":"2038-01-19"
 }
 ----
 
@@ -205,6 +217,8 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 {
   "firstName":"New",
   "lastName":"Value",
+  "dateOfBirth":"1970-01-01",
+  "retirement":"2038-01-19",
   "_links":{
     "self":{
       "href":"http://localhost:8080/members/2"

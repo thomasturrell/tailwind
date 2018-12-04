@@ -4,6 +4,7 @@
 
 package com.berrycloud.tailwind;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
@@ -36,6 +38,21 @@ public class Member {
   @NotBlank
   @Size(max = 255)
   private String lastName;
+
+  /**
+   * <p>
+   * The date of birth of this member.
+   * </p>
+   */
+  @Past
+  private LocalDate dateOfBirth;
+
+  /**
+   * <p>
+   * The date of retirement of this member.
+   * </p>
+   */
+  private LocalDate retirement;
 
   /**
    * The plans associated with this member.
