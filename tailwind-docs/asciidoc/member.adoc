@@ -1,0 +1,216 @@
+= Members
+
+== List members
+
+List all members present in the application database.
+
+`GET /members`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|page
+|number
+|The page number to return
+
+|size
+|number
+|The number of members to return
+
+|sort
+|string
+|What to sort members by. Can be either `firstName` or `lastName`. Default: `firstName`
+|===
+
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "_embedded": {
+    "members": [
+      {
+        "firstName": "Lisa",
+        "lastName": "Simpson",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/members/1"
+          },
+          "member": {
+            "href": "http://localhost:8080/members/1"
+          }
+        }
+      },
+      {
+        "firstName": "Test",
+        "lastName": "Member",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/members/2"
+          },
+          "member": {
+            "href": "http://localhost:8080/members/2"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/members{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:8080/profile/members"
+    }
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 2,
+    "totalPages": 1,
+    "number": 0
+  }
+}
+----
+
+== Get a single member
+
+Return a member with a given ID.
+
+NOTE: The API returns a `404 Not Found` if a member with given ID does not exist in the database.
+
+`GET /members/{id}`
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "firstName": "Lisa",
+  "lastName": "Simpson",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/members/1"
+    },
+    "member": {
+      "href": "http://localhost:8080/members/1"
+    }
+  }
+}
+----
+
+== Create a member
+
+A client can create a new member.
+
+`POST /members`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|firstName
+|string
+|*Required.* The first name of the new member. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+
+|lastName
+|string
+|*Required.* The last name of the new member. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|===
+
+=== Example
+[source, json]
+----
+{
+  "firstName": "Test",
+  "lastName": "Member"
+}
+----
+
+=== Response
+`Status: 201 Created` +
+`Location: http://localhost:8080/members/2`
+[source, json]
+----
+{
+  "firstName": "Test",
+  "lastName": "Member",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/members/2"
+    },
+    "member": {
+      "href": "http://localhost:8080/members/2"
+    }
+  }
+}
+----
+
+== Edit a member
+
+A client can edit an existing member identified by the ID.
+
+NOTE: The API returns a `404 Not Found` if a member with given ID does not exist in the database.
+
+`PATCH /members/{id}`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|firstName
+|string
+|The first name of the new member. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+
+|lastName
+|string
+|The last name of the new member. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|===
+
+=== Example
+[source, json]
+----
+{
+  "firstName": "New",
+  "lastName": "Value"
+}
+----
+
+=== Response
+`Status: 200 OK` +
+`Location: http://localhost:8080/members/2`
+[source, json]
+----
+{
+  "firstName": "New",
+  "lastName": "Value",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/members/2"
+    },
+    "member": {
+      "href": "http://localhost:8080/members/2"
+    }
+  }
+}
+----
+
+== Delete a member
+
+A client can delete an existing member identified by the ID.
+
+NOTE: The API returns a `404 Not Found` if a member with given ID does not exist in the database.
+
+`DELETE /members/{id}`
+
+=== Response
+`Status: 204 No Content`

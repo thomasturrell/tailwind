@@ -38,6 +38,7 @@
   <modules>
     <module>tailwind-parent</module>
     <module>tailwind</module>
+    <module>tailwind-docs</module>
   </modules>
 
   <build>
