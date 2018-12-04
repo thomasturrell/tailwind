@@ -1,5 +1,5 @@
 
-package com.berrycloud.flywaydemo;
+package com.berrycloud.tailwind;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -11,7 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FlywayDemoApplicationIT {
+public class TailwindApplicationIT {
 
   private PrintStream original;
 
@@ -32,10 +32,10 @@ public class FlywayDemoApplicationIT {
     System.setOut(new PrintStream(sysOut));
 
     // When Starting Application
-    FlywayDemoApplication.main(new String[] { "--server.port=0" });
+    TailwindApplication.main(new String[] { "--server.port=0" });
 
     // Then Application Starts
-    assertThat(sysOut.toString(), containsString("Started FlywayDemoApplication"));
+    assertThat(sysOut.toString(), containsString("Started TailwindApplication"));
 
   }
 

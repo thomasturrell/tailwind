@@ -1,5 +1,5 @@
 
-package com.berrycloud.flywaydemo;
+package com.berrycloud.tailwind;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FlywayDemoApplicationTests {
+public class TailwindApplicationTests {
 
   @Test
   public void contextLoads() {

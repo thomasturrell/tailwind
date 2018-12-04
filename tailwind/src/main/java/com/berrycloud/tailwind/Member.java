@@ -1,5 +1,5 @@
 
-package com.berrycloud.flywaydemo;
+package com.berrycloud.tailwind;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

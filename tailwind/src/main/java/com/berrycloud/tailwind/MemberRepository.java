@@ -1,5 +1,5 @@
 
-package com.berrycloud.flywaydemo;
+package com.berrycloud.tailwind;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 

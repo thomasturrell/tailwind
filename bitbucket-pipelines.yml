@@ -20,7 +20,7 @@ pipelines:
             - git config --global user.name "Leonid Zhaldybin"
             - mvn -batch-mode release:prepare -Dusername=$USERNAME -Dpassword=$PASSWORD
   tags:
-    flyway-demo-*:
+    tailwind-*:
       - step:
           name: Test, package and install
           caches:
@@ -31,7 +31,7 @@ pipelines:
           artifacts:
             - '*/target/*.war'
             - '*/target/maven-archiver/pom.properties'
-  branches:            
+  branches:
     master:
       - step:
           name: Test, package and verify

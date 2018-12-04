@@ -1,5 +1,5 @@
 
-package com.berrycloud.flywaydemo;
+package com.berrycloud.tailwind;
 
 import lombok.RequiredArgsConstructor;
 
@@ -9,7 +9,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-public class FlywayDemoConfiguration {
+public class TailwindConfiguration {
 
   /**
    * <p>
