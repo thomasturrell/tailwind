@@ -4,11 +4,16 @@
 
 package com.berrycloud.tailwind;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,9 +27,15 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Getter
 @Setter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
   @Id
@@ -53,6 +64,16 @@ public class Member {
    * </p>
    */
   private LocalDate retirement;
+
+  @ReadOnlyProperty
+  @JsonProperty(access = Access.READ_ONLY)
+  @CreatedDate
+  private Instant created;
+
+  @ReadOnlyProperty
+  @JsonProperty(access = Access.READ_ONLY)
+  @LastModifiedDate
+  private Instant lastModified;
 
   /**
    * The plans associated with this member.
