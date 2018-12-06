@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>tailwind-docs</artifactId>
@@ -21,6 +21,55 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <asciidoctor-maven-plugin.version>1.5.7.1</asciidoctor-maven-plugin.version>
+    <asciidoctorj-pdf.version>1.5.0-alpha.16</asciidoctorj-pdf.version>
+    <maven.build.timestamp.format>MM-dd-yyyy</maven.build.timestamp.format>
   </properties>
+
+  <build>
+    <defaultGoal>process-resources</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <version>${asciidoctor-maven-plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj-pdf</artifactId>
+            <version>${asciidoctorj-pdf.version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <sourceDocumentName>index.adoc</sourceDocumentName>
+          <outputFile>tailwind-documentation.pdf</outputFile>
+          <headerFooter>true</headerFooter>
+          <!-- Attributes common to all output formats -->
+          <attributes>
+            <revnumber>${project.version}</revnumber>
+            <revdate>${maven.build.timestamp}</revdate>
+          </attributes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>generate-pdf-doc</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+              <backend>pdf</backend>
+              <sourceHighlighter>coderay</sourceHighlighter>
+              <attributes>
+                <icons>font</icons>
+                <pagenums/>
+                <toc/>
+              </attributes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
