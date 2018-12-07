@@ -29,17 +29,43 @@ pipelines:
             - mvn clean install
             - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=berrycloud -Dsonar.login=$SONAR_TOKEN
           artifacts:
-            - '*/target/*.war'
+            - '*/target/*.zip'
             - '*/target/maven-archiver/pom.properties'
-  branches:
-    master:
       - step:
-          name: Test, package and verify
+          name: Deliver to production
+          deployment: production
+          script:
+            - ./deliver.sh
+  branches:
+    release-*:
+      - step:
+          name: Test, package and install
           caches:
             - maven
           script:
             - mvn clean install
             - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=berrycloud -Dsonar.login=$SONAR_TOKEN
           artifacts:
-            - '*/target/*.war'
+            - '*/target/*.zip'
             - '*/target/maven-archiver/pom.properties'
+      - step:
+          name: Deliver to staging
+          deployment: staging
+          script:
+            - echo "Deliver to staging"
+    master:
+      - step:
+          name: Test, package and install
+          caches:
+            - maven
+          script:
+            - mvn clean install
+            - mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=berrycloud -Dsonar.login=$SONAR_TOKEN
+          artifacts:
+            - '*/target/*.zip'
+            - '*/target/maven-archiver/pom.properties'
+      - step:
+          name: Deliver to test
+          deployment: test
+          script:
+            - echo "Deliver to test"
