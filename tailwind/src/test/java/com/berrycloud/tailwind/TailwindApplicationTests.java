@@ -1,3 +1,6 @@
+/*
+ * Copyright 2018 Berry Cloud s.r.o. All rights reserved.
+ */
 
 package com.berrycloud.tailwind;
 

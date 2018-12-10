@@ -253,4 +253,9 @@
     <module name="CommentsIndentation" />
   </module>
 
+  <module name="Header">
+    <property name="header" value="/*\n * Copyright 2018 Berry Cloud s.r.o. All rights reserved.\n */"/>
+    <property name="fileExtensions" value="java"/>
+  </module>
+
 </module>
