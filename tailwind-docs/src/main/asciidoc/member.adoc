@@ -263,13 +263,15 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
     "plans":[
       {
         "name":"Gold",
-        "organization":"Happy",
         "_links":{
           "self":{
             "href":"http://localhost:8080/plans/1"
           },
           "plan":{
             "href":"http://localhost:8080/plans/1"
+          },
+          "organization":{
+            "href":"http://localhost:8080/plans/1/organization"
           },
           "members":{
             "href":"http://localhost:8080/plans/1/members"
@@ -277,14 +279,16 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
         }
       },
       {
-        "name":"Gold",
-        "organization":"Health",
+        "name":"Silver",
         "_links":{
           "self":{
             "href":"http://localhost:8080/plans/2"
           },
           "plan":{
             "href":"http://localhost:8080/plans/2"
+          },
+          "organization":{
+            "href":"http://localhost:8080/plans/2/organization"
           },
           "members":{
             "href":"http://localhost:8080/plans/2/members"
@@ -332,3 +336,5 @@ NOTE: The API returns a `200 Ok` even if a plan with given ID does not exist in 
 plans/1
 plans/2
 ----
+
+<<<

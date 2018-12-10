@@ -21,7 +21,7 @@ List all plans present in the application database.
 
 |sort
 |string
-|What to sort plans by. Can be either `name` or `organization`. Default: `name`
+|What to sort plans by. Can be only `name`. Default: `name`
 |===
 
 
@@ -36,13 +36,15 @@ List all plans present in the application database.
     "plans":[
       {
         "name":"Gold",
-        "organization":"Healthy",
         "_links":{
           "self":{
             "href":"http://localhost:8080/plans/1"
           },
           "plan":{
             "href":"http://localhost:8080/plans/1"
+          },
+          "organization":{
+            "href":"http://localhost:8080/plans/1/organization"
           },
           "members":{
             "href":"http://localhost:8080/plans/1/members"
@@ -51,13 +53,15 @@ List all plans present in the application database.
       },
       {
         "name":"Silver",
-        "organization":"Healthy",
         "_links":{
           "self":{
             "href":"http://localhost:8080/plans/2"
           },
           "plan":{
             "href":"http://localhost:8080/plans/2"
+          },
+          "organization":{
+            "href":"http://localhost:8080/plans/2/organization"
           },
           "members":{
             "href":"http://localhost:8080/plans/2/members"
@@ -68,18 +72,8 @@ List all plans present in the application database.
   },
   "_links":{
     "self":{
-      "href":"http://localhost:8080/plans{?page,size,sort}",
-      "templated":true
-    },
-    "profile":{
-      "href":"http://localhost:8080/profile/plans"
+      "href":"http://localhost:8080/organizations/1/plans"
     }
-  },
-  "page":{
-    "size":20,
-    "totalElements":2,
-    "totalPages":1,
-    "number":0
   }
 }
 ----
@@ -100,13 +94,15 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
 ----
 {
   "name":"Gold",
-  "organization":"Healthy",
   "_links":{
     "self":{
       "href":"http://localhost:8080/plans/1"
     },
     "plan":{
       "href":"http://localhost:8080/plans/1"
+    },
+    "organization":{
+      "href":"http://localhost:8080/plans/1/organization"
     },
     "members":{
       "href":"http://localhost:8080/plans/1/members"
@@ -131,8 +127,8 @@ A client can create a new plan.
 |*Required.* The name of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
 
 |organization
-|string
-|*Required.* The organization of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|URI
+|Optional. The link to organization of the new plan.
 |===
 
 === Example
@@ -140,7 +136,7 @@ A client can create a new plan.
 ----
 {
   "name":"Gold",
-  "organization":"Healthy"
+  "organization":"organizations/1"
 }
 ----
 
@@ -151,13 +147,15 @@ A client can create a new plan.
 ----
 {
   "name":"Gold",
-  "organization":"Healthy",
   "_links":{
     "self":{
       "href":"http://localhost:8080/plans/1"
     },
     "plan":{
       "href":"http://localhost:8080/plans/1"
+    },
+    "organization":{
+      "href":"http://localhost:8080/plans/1/organization"
     },
     "members":{
       "href":"http://localhost:8080/plans/1/members"
@@ -172,7 +170,7 @@ A client can edit an existing plan identified by the ID.
 
 NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
 
-`PATCH /plan/{id}`
+`PATCH /plans/{id}`
 
 === Parameters
 
@@ -184,8 +182,8 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
 |The name of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
 
 |organization
-|string
-|The organization of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|URI
+|The organization of the plan.
 |===
 
 === Example
@@ -193,7 +191,7 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
 ----
 {
   "name":"New",
-  "organization":"Value"
+  "organization":"organization/2"
 }
 ----
 
@@ -204,13 +202,15 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
 ----
 {
   "name":"New",
-  "organization":"Value",
   "_links":{
     "self":{
       "href":"http://localhost:8080/plans/1"
     },
     "plan":{
       "href":"http://localhost:8080/plans/1"
+    },
+    "organization":{
+      "href":"http://localhost:8080/plans/1/organization"
     },
     "members":{
       "href":"http://localhost:8080/plans/1/members"
@@ -225,7 +225,7 @@ A client can delete an existing plan identified by the ID.
 
 NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
 
-`DELETE /plan/{id}`
+`DELETE /plans/{id}`
 
 === Response
 `Status: 204 No Content`
@@ -294,7 +294,7 @@ A client can add members to an existing plan identified by the plan self link.  
 NOTE: The API returns a `200 Ok` even if a member with given ID does not exist in the database. The members self link can be relative. Multiple members are separated by a newline.
 
 `content-type: text/uri-list` +
-`PATCH /plan/{id}/members`
+`PATCH /plans/{id}/members`
 
 === Example
 
@@ -302,6 +302,10 @@ NOTE: The API returns a `200 Ok` even if a member with given ID does not exist i
 members/1
 members/2
 ----
+
+=== Response
+
+`Status: 204 OK`
 
 == Replace the members of a plan
 
@@ -310,7 +314,7 @@ A client can replace members of an existing plan identified by the plan self lin
 NOTE: The API returns a `200 Ok` even if a member with given ID does not exist in the database. The members self link can be relative. Multiple members are separated by a newline. It is possible to replace the members with zero members.
 
 `content-type: text/uri-list` +
-`PUT /plan/{id}/members`
+`PUT /plans/{id}/members`
 
 === Example
 
@@ -318,3 +322,58 @@ NOTE: The API returns a `200 Ok` even if a member with given ID does not exist i
 members/1
 members/2
 ----
+
+=== Response
+
+`Status: 204 OK`
+
+== Get the organization of a plan
+
+Return the organization of a plan with a given ID.
+
+NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
+
+`GET /plans/{id}/organization`
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "name":"Healthy",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "organization":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "plans":{
+      "href":"http://localhost:8080/organizations/1/plans"
+    }
+  }
+}
+----
+
+== Assign an organization to a plan
+
+A client can assign an organization to an existing plan identified by the plan self link. Organization is identified by the organization self link.
+
+NOTE: The API returns a `200 Ok` even if an organization with given link does not exist in the database. The organization self link can be relative.
+
+`content-type: text/uri-list` +
+`PUT /plans/{id}/organization`
+
+=== Example
+
+----
+organizations/1
+----
+
+=== Response
+
+`Status: 204 OK`
+
+<<<

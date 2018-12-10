@@ -48,7 +48,7 @@ public class PlanControllerIT {
     // Given Plan Exists
 
     // When Getting Plan
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/1", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/4", String.class);
 
     // Then Status Code Is Ok
     assertThat(response.getStatusCode(), is(HttpStatus.OK));
@@ -60,7 +60,7 @@ public class PlanControllerIT {
     // Given Plan Does Not Exist
 
     // When Getting Plan
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/100", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/400", String.class);
 
     // Then Status Code Is Not Found
     assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
@@ -72,7 +72,7 @@ public class PlanControllerIT {
     // Given Plan Exists
 
     // When Getting Plan
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/1", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/4", String.class);
 
     // Then Name Field Exists
     assertThat(response.getBody(), hasJsonPath("$.name"));
@@ -84,34 +84,34 @@ public class PlanControllerIT {
     // Given Existing Plan With Name Gold
 
     // When Getting Plan
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/1", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/4", String.class);
 
     // Then Name Is Gold
     assertThat(response.getBody(), hasJsonPath("$.name", is("Gold")));
   }
 
   @Test
-  public void testGivenPlanExistsWhenGettingPlanThenOrganizationFieldExists() {
+  public void testGivenPlanExistsWhenGettingPlanThenOrganizationLinkExists() {
 
     // Given Plan Exists
 
     // When Getting Plan
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/1", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/4", String.class);
 
-    // Then Organization Field Exists
-    assertThat(response.getBody(), hasJsonPath("$.organization"));
+    // Then Organization Link Exists
+    assertThat(response.getBody(), hasJsonPath("$._links.organization"));
   }
 
   @Test
-  public void testGivenExistingPlanWithOrganizationHealthyWhenGettingPlanThenOrganizationIsHealthy() {
+  public void testGivenExistingPlanWithOrganizationWhenGettingPlanOrganizationThenStatusCodeIsOk() {
 
-    // Given Existing Plan With Organization Healthy
+    // Given Existing Plan With Organization
 
-    // When Getting Plan
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/1", String.class);
+    // When Getting Plan Organization
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/4/organization", String.class);
 
-    // Then Organization Is Healthy
-    assertThat(response.getBody(), hasJsonPath("$.organization", is("Healthy")));
+    // Then Status Code Is Ok
+    assertThat(response.getStatusCode(), is(HttpStatus.OK));
   }
 
   @Test
@@ -120,7 +120,7 @@ public class PlanControllerIT {
     // Given Existing Plan With Member
 
     // When Getting Plan Members
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/1/members", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/4/members", String.class);
 
     // Then Status Code Is Ok
     assertThat(response.getStatusCode(), is(HttpStatus.OK));
@@ -133,7 +133,7 @@ public class PlanControllerIT {
 
     // When Deleting Plan
     final ResponseEntity<String> response =
-        testRestTemplate.exchange("/plans/2", HttpMethod.DELETE, null, String.class);
+        testRestTemplate.exchange("/plans/5", HttpMethod.DELETE, null, String.class);
 
     // Then Status Code Is No Content
     assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
@@ -145,10 +145,10 @@ public class PlanControllerIT {
     // Given Plan Exists
 
     // When Deleting Plan
-    testRestTemplate.delete("/plans/3");
+    testRestTemplate.delete("/plans/6");
 
     // Then Plan Is Deleted
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/3", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/6", String.class);
     assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
   }
 
@@ -160,7 +160,7 @@ public class PlanControllerIT {
 
     // When Posting Plan
     final ResponseEntity<String> response = testRestTemplate.exchange("/plans", HttpMethod.POST,
-        new HttpEntity<>("{\"name\":\"Tin\",\"organization\":\"Happy\"}", headers), String.class);
+        new HttpEntity<>("{\"name\":\"Tin\"}", headers), String.class);
 
     // Then Status Code Is Created
     assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
@@ -174,7 +174,7 @@ public class PlanControllerIT {
 
     // When Posting Plan
     final ResponseEntity<String> response = testRestTemplate.exchange("/plans", HttpMethod.POST,
-        new HttpEntity<>("{\"name\":\"Lead\",\"organization\":\"Happy\"}", headers), String.class);
+        new HttpEntity<>("{\"name\":\"Lead\"}", headers), String.class);
 
     // Then Location Is Not Null
     assertThat(response.getHeaders().getLocation(), is(notNullValue()));
@@ -189,11 +189,11 @@ public class PlanControllerIT {
     // Given Plan Exists
 
     // When Patching Plan With Different Name
-    testRestTemplate.exchange("/plans/4", HttpMethod.PATCH, new HttpEntity<>("{\"name\":\"Steel\"}", headers),
+    testRestTemplate.exchange("/plans/7", HttpMethod.PATCH, new HttpEntity<>("{\"name\":\"Steel\"}", headers),
         String.class);
 
     // Then Plans Name Is Changed
-    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/4", String.class);
+    final ResponseEntity<String> response = testRestTemplate.getForEntity("/plans/7", String.class);
     assertThat(response.getBody(), hasJsonPath("$.name", is("Steel")));
   }
 

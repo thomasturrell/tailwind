@@ -1,0 +1,276 @@
+= Organizations
+
+== List organizations
+
+List all organizations present in the application database.
+
+`GET /organizations`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|page
+|number
+|The page number to return
+
+|size
+|number
+|The number of organizations to return
+
+|sort
+|string
+|What to sort organizations by. The only valid value is currently `name`. Default: `name`
+|===
+
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "_embedded":{
+    "organizations":[
+      {
+        "name":"Mob",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/organizations/1"
+          },
+          "organization":{
+            "href":"http://localhost:8080/organizations/1"
+          },
+          "plans":{
+            "href":"http://localhost:8080/organizations/1/plans"
+          }
+        }
+      },
+      {
+        "name":"Bom",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/organizations/2"
+          },
+          "organization":{
+            "href":"http://localhost:8080/organizations/2"
+          },
+          "plans":{
+            "href":"http://localhost:8080/organizations/2/plans"
+          }
+        }
+      }
+    ]
+  },
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/organizations{?page,size,sort}",
+      "templated":true
+    },
+    "profile":{
+      "href":"http://localhost:8080/profile/organizations"
+    }
+  },
+  "page":{
+    "size":20,
+    "totalElements":2,
+    "totalPages":1,
+    "number":0
+  }
+}
+----
+
+== Get a single organization
+
+Return an organization with a given ID.
+
+NOTE: The API returns a `404 Not Found` if an organization with given ID does not exist in the database.
+
+`GET /organizations/{id}`
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "name":"Mob",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "organization":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "plans":{
+      "href":"http://localhost:8080/organizations/1/plans"
+    }
+  }
+}
+----
+
+== Create an organization
+
+A client can create a new organization.
+
+`POST /organizations`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|name
+|string
+|*Required.* The name of the new organization. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|===
+
+=== Example
+[source, json]
+----
+{
+  "name":"Mob"
+}
+----
+
+=== Response
+`Status: 201 Created` +
+`Location: http://localhost:8080/organizations/1`
+[source, json]
+----
+{
+  "name":"Mob",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "organization":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "plans":{
+      "href":"http://localhost:8080/organizations/1/plans"
+    }
+  }
+}
+----
+
+== Edit an organization
+
+A client can edit an existing organization identified by the ID.
+
+NOTE: The API returns a `404 Not Found` if an organization with given ID does not exist in the database.
+
+`PATCH /organizations/{id}`
+
+=== Parameters
+
+|===
+|Name |Type |Description
+
+|name
+|string
+|The new name of the organization. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|===
+
+=== Example
+[source, json]
+----
+{
+  "name":"New"
+}
+----
+
+=== Response
+`Status: 200 OK` +
+[source, json]
+----
+{
+  "name":"New",
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "organization":{
+      "href":"http://localhost:8080/organizations/1"
+    },
+    "plans":{
+      "href":"http://localhost:8080/organizations/1/plans"
+    }
+  }
+}
+----
+
+== Delete an organization
+
+A client can delete an existing organization identified by the ID.
+
+NOTE: The API returns a `404 Not Found` if an organization with given ID does not exist in the database.
+
+`DELETE /organizations/{id}`
+
+=== Response
+`Status: 204 No Content`
+
+== Get the plans of an organization
+
+Return the plans of an organization with a given ID.
+
+NOTE: The API returns a `404 Not Found` if an organization with given ID does not exist in the database. The plans of the organization cannot be changed or replaced.
+
+`GET /organizations/{id}/plans`
+
+=== Response
+
+`Status: 200 OK`
+
+[source, json]
+----
+{
+  "_embedded":{
+    "plans":[
+      {
+        "name":"Gold",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/plans/1"
+          },
+          "plan":{
+            "href":"http://localhost:8080/plans/1"
+          },
+          "members":{
+            "href":"http://localhost:8080/plans/1/members"
+          },
+          "organization":{
+            "href":"http://localhost:8080/plans/1/organization"
+          }
+        }
+      },
+      {
+        "name":"Silver",
+        "_links":{
+          "self":{
+            "href":"http://localhost:8080/plans/2"
+          },
+          "plan":{
+            "href":"http://localhost:8080/plans/2"
+          },
+          "members":{
+            "href":"http://localhost:8080/plans/2/members"
+          },
+          "organization":{
+            "href":"http://localhost:8080/plans/2/organization"
+          }
+        }
+      }
+    ]
+  },
+  "_links":{
+    "self":{
+      "href":"http://localhost:8080/organizations/1/plans"
+    }
+  }
+}
+----
