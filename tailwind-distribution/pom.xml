@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.berrycloud.tailwind</groupId>
     <artifactId>tailwind-build</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
   </parent>
 
    <artifactId>distribution</artifactId>
@@ -21,13 +21,13 @@
       <groupId>com.berrycloud.tailwind</groupId>
       <artifactId>tailwind-docs</artifactId>
       <type>pom</type>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.2.0</version>
     </dependency>
 
     <dependency>
       <groupId>com.berrycloud.tailwind</groupId>
       <artifactId>tailwind</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.2.0</version>
       <type>war</type>
     </dependency>
   </dependencies>
