@@ -173,6 +173,7 @@
         <version>${maven-release-plugin.version}</version>
         <configuration>
           <tagNameFormat>tailwind-@{project.version}</tagNameFormat>
+          <pushChanges>false</pushChanges>
         </configuration>
       </plugin>
     </plugins>

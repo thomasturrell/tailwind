@@ -16,9 +16,9 @@ pipelines:
           caches:
             - maven
           script:
-            - git config --global user.email "leonid@berrycloud.cz"
-            - git config --global user.name "Leonid Zhaldybin"
             - mvn -batch-mode release:prepare -Dusername=$USERNAME -Dpassword=$PASSWORD
+            - git push
+            - git push --tags
   tags:
     tailwind-*:
       - step:
