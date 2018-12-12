@@ -21,7 +21,7 @@ List all members present in the application database.
 
 |sort
 |string
-|What to sort members by. Can be either `firstName`, `lastName`, `dateOfBirth` or `retirement`. Default: `firstName`
+|What to sort members by. Can be either `firstName`, `lastName`, `dateOfBirth`, `retirement`, `created` or `lastModified`. Default: `firstName`
 |===
 
 
@@ -39,6 +39,8 @@ List all members present in the application database.
         "lastName":"Simpson",
         "dateOfBirth":"1958-01-01",
         "retirement":"2018-01-01",
+        "created":"2018-12-12T09:25:47.439Z",
+        "lastModified":"2018-12-12T09:25:47.439Z",
         "_links":{
           "self":{
             "href":"http://localhost:8080/members/1"
@@ -56,6 +58,8 @@ List all members present in the application database.
         "lastName":"Member",
         "dateOfBirth":"1948-01-01",
         "retirement":"1985-01-12",
+        "created":"2018-12-12T09:26:10.665Z",
+        "lastModified":"2018-12-12T09:26:10.665Z",
         "_links":{
           "self":{
             "href":"http://localhost:8080/members/2"
@@ -107,6 +111,8 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
   "lastName":"Simpson",
   "dateOfBirth":"1958-01-01",
   "retirement":"2018-01-01",
+  "created":"2018-12-12T09:25:47.439Z",
+  "lastModified":"2018-12-12T09:25:47.439Z",
   "_links":{
     "self":{
       "href":"http://localhost:8080/members/1"
@@ -139,6 +145,14 @@ A client can create a new member.
 |lastName
 |string
 |*Required.* The last name of the new member. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+
+|dateOfBirth
+|string
+|Optional. The date of birth of the new member. _NOTE: should contain a valid date in "YYYY-MM-dd" format, and has to be in the past_
+
+|retirement
+|string
+|Optional. The date of retirement of the new member. _NOTE: should contain a valid date in "YYYY-MM-dd" format_
 |===
 
 === Example
@@ -162,6 +176,8 @@ A client can create a new member.
   "lastName":"Member",
   "dateOfBirth":"1958-01-01",
   "retirement":"2018-01-01",
+  "created": "2018-12-12T09:40:03.084Z",
+  "lastModified": "2018-12-12T09:40:03.084Z",
   "_links":{
     "self":{
       "href":"http://localhost:8080/members/2"
@@ -196,6 +212,14 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 |lastName
 |string
 |The last name of the new member. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+
+|dateOfBirth
+|string
+|The date of birth of the new member. _NOTE: should contain a valid date in "YYYY-MM-dd" format, and has to be in the past_
+
+|retirement
+|string
+|The date of retirement of the new member. _NOTE: should contain a valid date in "YYYY-MM-dd" format_
 |===
 
 === Example
@@ -203,7 +227,7 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 ----
 {
   "firstName":"New",
-  "lastName":"Value"
+  "lastName":"Value",
   "dateOfBirth":"1970-01-01",
   "retirement":"2038-01-19"
 }
@@ -219,6 +243,8 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
   "lastName":"Value",
   "dateOfBirth":"1970-01-01",
   "retirement":"2038-01-19",
+  "created":"2018-12-12T09:26:10.665Z",
+  "lastModified":"2018-12-12T09:42:32.999Z",
   "_links":{
     "self":{
       "href":"http://localhost:8080/members/2"
@@ -309,7 +335,7 @@ NOTE: The API returns a `404 Not Found` if a member with given ID does not exist
 
 A client can add plans to an existing member identified by the member self link.  Plans are identified by the plan self link.
 
-NOTE: The API returns a `200 Ok` even if a plan with given ID does not exist in the database. The plans self link can be relative. Multiple plans are separated by a newline.
+NOTE: The API returns a `200 Ok` even if a plan with given link does not exist in the database. The plan self link can be relative. Multiple plans are separated by a newline.
 
 `content-type: text/uri-list` +
 `PATCH /members/{id}/plans`
@@ -321,11 +347,15 @@ plans/1
 plans/2
 ----
 
+=== Response
+
+`Status: 204 No Content`
+
 == Replace the plans of a member
 
 A client can replace plans of an existing member identified by the member self link.  Plans are identified by the plans self link.
 
-NOTE: The API returns a `200 Ok` even if a plan with given ID does not exist in the database. The plans self link can be relative. Multiple plans are separated by a newline. It is possible to replace the plans with zero plans.
+NOTE: The API returns a `200 Ok` even if a plan with given link does not exist in the database. The plans self link can be relative. Multiple plans are separated by a newline. It is possible to replace the plans with zero plans.
 
 `content-type: text/uri-list` +
 `PUT /members/{id}/plans`
@@ -336,5 +366,9 @@ NOTE: The API returns a `200 Ok` even if a plan with given ID does not exist in 
 plans/1
 plans/2
 ----
+
+=== Response
+
+`Status: 204 No Content`
 
 <<<

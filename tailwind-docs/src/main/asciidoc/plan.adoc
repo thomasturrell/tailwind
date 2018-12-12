@@ -128,7 +128,7 @@ A client can create a new plan.
 
 |organization
 |URI
-|Optional. The link to organization of the new plan.
+|Optional. The link to organization of the new plan. _NOTE: The request will succeed even if the organization with a given link does not exist_
 |===
 
 === Example
@@ -179,11 +179,11 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
 
 |name
 |string
-|The name of the new plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
+|The new name of the plan. _NOTE: cannot be blank, and cannot be longer than 255 characters_
 
 |organization
 |URI
-|The organization of the plan.
+|The new organization of the plan. _NOTE: The request will succeed even if the organization with a given link does not exist_
 |===
 
 === Example
@@ -232,7 +232,7 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
 
 == Get the members of a plan
 
-Return the members of an plan with a given ID.
+Return the members of a plan with a given ID.
 
 NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist in the database.
 
@@ -250,6 +250,10 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
       {
         "firstName":"Jane",
         "lastName":"Dow",
+        "dateOfBirth": "1958-01-01",
+        "retirement": "2018-01-01",
+        "created": "2018-12-12T10:43:54.521Z",
+        "lastModified": "2018-12-12T13:45:05.691Z",
         "_links":{
           "self":{
             "href":"http://localhost:8080/members/2"
@@ -265,6 +269,10 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
       {
         "firstName":"Fred",
         "lastName":"Bloggs",
+        "dateOfBirth": "1948-01-01",
+        "retirement": "1985-01-12",
+        "created": "2018-12-12T10:44:08.627Z",
+        "lastModified": "2018-12-12T10:44:08.627Z",
         "_links":{
           "self":{
             "href":"http://localhost:8080/members/1"
@@ -291,7 +299,7 @@ NOTE: The API returns a `404 Not Found` if a plan with given ID does not exist i
 
 A client can add members to an existing plan identified by the plan self link.  Members are identified by the member self link.
 
-NOTE: The API returns a `200 Ok` even if a member with given ID does not exist in the database. The members self link can be relative. Multiple members are separated by a newline.
+NOTE: The API returns a `200 Ok` even if a member with given link does not exist. The members self link can be relative. Multiple members are separated by a newline.
 
 `content-type: text/uri-list` +
 `PATCH /plans/{id}/members`
@@ -311,7 +319,7 @@ members/2
 
 A client can replace members of an existing plan identified by the plan self link.  Members are identified by the member self link.
 
-NOTE: The API returns a `200 Ok` even if a member with given ID does not exist in the database. The members self link can be relative. Multiple members are separated by a newline. It is possible to replace the members with zero members.
+NOTE: The API returns a `200 Ok` even if a member with given link does not exist. The members self link can be relative. Multiple members are separated by a newline. It is possible to replace the members with zero members.
 
 `content-type: text/uri-list` +
 `PUT /plans/{id}/members`
