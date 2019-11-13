@@ -97,3 +97,5 @@ The prepare goal of the release plugin will perform the following steps:
 * Commit the modified POMs
 
 Finally the release branch should be merged back into master.
+
+Copyright Berry Cloud Ltd 2018 - 2019
