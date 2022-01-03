@@ -5,20 +5,19 @@
 package com.berrycloud.tailwind;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import java.time.LocalDate;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.validation.Errors;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MemberValidatorTests {
 
   @Mock
@@ -37,7 +36,7 @@ public class MemberValidatorTests {
     validator.validate(member, errors);
 
     // Then Zero Errors
-    verifyZeroInteractions(errors);
+    verifyNoInteractions(errors);
   }
 
   @Test
@@ -51,7 +50,7 @@ public class MemberValidatorTests {
     validator.validate(member, errors);
 
     // Then Zero Errors
-    verifyZeroInteractions(errors);
+    verifyNoInteractions(errors);
   }
 
   @Test
@@ -66,7 +65,7 @@ public class MemberValidatorTests {
     validator.validate(member, errors);
 
     // Then Zero Errors
-    verifyZeroInteractions(errors);
+    verifyNoInteractions(errors);
   }
 
   @Test

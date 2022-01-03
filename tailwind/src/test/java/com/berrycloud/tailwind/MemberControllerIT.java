@@ -12,8 +12,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -25,10 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class MemberControllerIT {
 
@@ -37,7 +34,7 @@ public class MemberControllerIT {
 
   @Test
   public void testWhenGettingMembersThenStatusCodeIsOk() {
-
+ 
     // When Getting Members
     final ResponseEntity<String> response = testRestTemplate.getForEntity("/members", String.class);
 
@@ -135,8 +132,8 @@ public class MemberControllerIT {
     // Given Member Exists
 
     // When Deleting Member
-    final ResponseEntity<String> response =
-        testRestTemplate.exchange("/members/2", HttpMethod.DELETE, null, String.class);
+    final ResponseEntity<String> response = testRestTemplate.exchange("/members/2", HttpMethod.DELETE, null,
+        String.class);
 
     // Then Status Code Is No Content
     assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
@@ -617,8 +614,7 @@ public class MemberControllerIT {
   }
 
   @Test
-  public void
-      testGivenMemberExistsWhenPatchingMemberWithFirstNameWhichIsTooLongThenResponseContainsExpectedErrorMessage() {
+  public void testGivenMemberExistsWhenPatchingMemberWithFirstNameWhichIsTooLongThenResponseContainsExpectedErrorMessage() {
 
     final HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
@@ -638,8 +634,7 @@ public class MemberControllerIT {
   }
 
   @Test
-  public void
-      testGivenMemberExistsWhenPatchingMemberWithFirstNameWhichIsTooLongThenFirstNameOfTheMemberDoesNotChange() {
+  public void testGivenMemberExistsWhenPatchingMemberWithFirstNameWhichIsTooLongThenFirstNameOfTheMemberDoesNotChange() {
 
     final HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
@@ -830,8 +825,7 @@ public class MemberControllerIT {
   }
 
   @Test
-  public void
-      testGivenMemberExistsWhenPatchingMemberWithLastNameWhichIsTooLongThenResponseContainsExpectedErrorMessage() {
+  public void testGivenMemberExistsWhenPatchingMemberWithLastNameWhichIsTooLongThenResponseContainsExpectedErrorMessage() {
 
     final HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
