@@ -5,9 +5,7 @@
 package com.berrycloud.tailwind;
 
 import java.util.Map;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -22,8 +20,8 @@ public class TailwindConfiguration {
 
   /**
    * <p>
-   * Configure Spring Data REST to execute JSR-303 validations and validators prior to storing an entity to the
-   * database.
+   * Configure Spring Data REST to execute JSR-303 validations and validators
+   * prior to storing an entity to the database.
    * </p>
    */
   @Configuration
@@ -46,7 +44,8 @@ public class TailwindConfiguration {
       // Add prefixed validators
       final Map<String, Validator> validators = beanFactory.getBeansOfType(Validator.class);
 
-      // Add validators with 'beforePersist' prefix to both 'beforeSave' and 'beforeCreate' event
+      // Add validators with 'beforePersist' prefix to both 'beforeSave' and
+      // 'beforeCreate' event
       for (final Map.Entry<String, Validator> entry : validators.entrySet()) {
         if (entry.getKey().startsWith("beforePersist")) {
           validatingListener.addValidator(BEFORE_CREATE, entry.getValue());

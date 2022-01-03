@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.berrycloud.tailwind</groupId>
@@ -13,27 +15,29 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.1.RELEASE</version>
+    <version>2.6.2</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
-    <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
+    <java.version>11</java.version>
+
+    <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+    <checkstyle.version>9.2</checkstyle.version>
+    <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+    <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
   </properties>
 
   <ciManagement>
-    <system>Pipelines</system>
-    <url>https://bitbucket.org/berrycloud/tailwind/addon/pipelines/home</url>
+    <system>GitHub Actions</system>
+    <url>https://github.com/thomasturrell/tailwind/actions</url>
   </ciManagement>
 
   <scm>
-    <url>https://bitbucket.org/berrycloud/tailwind</url>
-    <connection>scm:git:https://bitbucket.org/berrycloud/tailwind</connection>
-    <developerConnection>scm:git:https://bitbucket.org/berrycloud/tailwind</developerConnection>
+    <url>https://github.com/thomasturrell/tailwind/</url>
+    <connection>scm:git:https://github.com/thomasturrell/tailwind.git</connection>
+    <developerConnection>scm:git:https://github.com/thomasturrell/tailwind.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
@@ -74,13 +78,13 @@
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>${maven-checkstyle-plugin.version}</version>
           <configuration>
-            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <includeTestSourceDirectory>false</includeTestSourceDirectory>
           </configuration>
           <dependencies>
             <dependency>
               <groupId>com.puppycrawl.tools</groupId>
               <artifactId>checkstyle</artifactId>
-              <version>8.15</version>
+              <version>${checkstyle.version}</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -106,7 +110,7 @@
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
+          <version>${lifecycle-mapping.version}</version>
           <configuration>
             <lifecycleMappingMetadata>
               <pluginExecutions>
